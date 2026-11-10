@@ -73,6 +73,14 @@ cd)
 	mark=CD
 	timeout=14400
 	;;
+kernel)
+	# the 386 kernel the other tasks boot, built from this tree
+	# by the one getbin installs
+	qemu=(-386 -smp 1)
+	guest="@{cd /sys/src/9/pc && mk 'CONF=pcf' install && mk clean}"
+	mark=KERNEL
+	timeout=900
+	;;
 smoke)
 	case ${1:-} in
 	-386|-amd64)	qemu=($1) ;;
@@ -83,7 +91,7 @@ smoke)
 	timeout=600
 	;;
 *)
-	echo "usage: $prog build | cd [rev] | smoke [-386 | -amd64]" >&2
+	echo "usage: $prog build | cd [rev] | kernel | smoke [-386 | -amd64]" >&2
 	exit 1
 	;;
 esac
